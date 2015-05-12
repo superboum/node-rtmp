@@ -1,5 +1,5 @@
 var net = require('net');
-var Client = require('./client');
+var Client = require('./lib/net/client');
 
 net.createServer(function (socket) {
 
