@@ -42,9 +42,11 @@ Client.prototype.replyTo = function(data) {
             return null;
         case stateEnum.CONNECTED:
             console.log("Receiving data...");
-            var p = new Packet(data);
-            console.log(p.toString());
-            console.log(p.raw);
+            var read = 0;
+            while(data.length > 0) {
+                var p = new Packet(data);
+                data = data.slice(p.size());
+            }
             return null;
         default:
             console.log('Error. Unknown state');

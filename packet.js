@@ -19,6 +19,7 @@ var position = {
  */
 function Packet(raw) {
     this.raw = raw;
+    this.read = 0;
     this._parse();
 }
 
@@ -32,6 +33,10 @@ Packet.prototype.toString = function() {
     s += "Message Stream ID: "+this.messageStreamId + "\n";
     s += "-----------";
     return s;
+}
+
+Packet.prototype.size = function() {
+    return this.headerSize + this.packetLength;
 }
 
 Packet.prototype._parse = function() {
