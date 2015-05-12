@@ -45,6 +45,7 @@ Client.prototype.replyTo = function(data) {
             var read = 0;
             while(data.length > 0) {
                 var p = new Packet(data);
+                console.log(p.toString());
                 data = data.slice(p.size());
             }
             return null;

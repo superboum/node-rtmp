@@ -26,11 +26,11 @@ function Packet(raw) {
 Packet.prototype.toString = function() {
     var s = "--HEADERS--\n";
     s += "Header Size: "+this.headerSize+" (id: "+this.headerId+")\n"
-    s += "Stream id: "+this.streamId + "\n";
+    s += "Stream id: 0x"+this.streamId.toString(16) + "\n";
     s += "Timestamp delta: "+this.timestampDelta + "\n";
     s += "Packet length: "+this.packetLength + "\n";
-    s += "Message Type ID: "+this.messageTypeId + "\n";
-    s += "Message Stream ID: "+this.messageStreamId + "\n";
+    s += "Message Type ID: 0x"+this.messageTypeId.toString(16) + "\n";
+    s += "Message Stream ID: 0x"+this.messageStreamId.toString(16) + "\n";
     s += "-----------";
     return s;
 }
