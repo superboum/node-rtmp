@@ -16,9 +16,11 @@ net.createServer(function (socket) {
 
     socket.on('end', function () {
         console.log("Disconnection from "+socket.remoteAddress);
+        currentClient = new Client();
     });
     socket.on("error", function (err) {
         console.log("Caught an error");
+        currentClient = new Client();
     });
 }).listen(1935);
 
