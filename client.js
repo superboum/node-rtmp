@@ -1,3 +1,5 @@
+var Packet = require('./packet');
+
 //Client State
 var stateEnum = {
     ERROR: 0,
@@ -6,13 +8,7 @@ var stateEnum = {
     CONNECTED: 3
 }
 
-//Headers size
-var headersSize = {
-    B1:  0x03, //One byte
-    B4:  0x02, //Four bytes
-    B8:  0x01, //Height bytes
-    B12: 0x00  //Twelve bytes
-}
+var protocolVersion = 0x03;
 
 //Random Data size
 var randomDataSize = 1536;
@@ -46,7 +42,9 @@ Client.prototype.replyTo = function(data) {
             return null;
         case stateEnum.CONNECTED:
             console.log("Receiving data...");
-            console.log(data);
+            var p = new Packet(data);
+            console.log(p.toString());
+            console.log(p.raw);
             return null;
         default:
             console.log('Error. Unknown state');
@@ -64,7 +62,8 @@ Client.prototype.replyTo = function(data) {
  */
 Client.prototype._handleHandshake = function(data) {   
     //Handshake control. First byte (should be 0x03)
-    if (data[0] != headersSize.B1) {
+    if (data[0] != protocolVersion) {
+        console.log("Wrong protocol version");
         this.state = stateEnum.ERROR;
         return null;
     }
@@ -73,7 +72,7 @@ Client.prototype._handleHandshake = function(data) {
     //Extract 1536 bytes payload (0 to 1535). This is random data.
     var clientRandomData = data.slice(1, randomDataSize+1); 
     this.serverRandomData = new Buffer(randomDataSize);
-    var headersData = new Buffer(1); headersData[0] = headersSize.B1; 
+    var headersData = new Buffer(1); headersData[0] = protocolVersion; 
 
     //Response to client (header + handshake server + client random data)
     var res = Buffer.concat(
