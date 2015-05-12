@@ -9,5 +9,6 @@
   "author": "Quentin Dufour <quentin@dufour.tk>",
   "license": "ISC",
   "dependencies": {
+    "amf": "^0.1.0"
   }
 }
